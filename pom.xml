@@ -193,12 +193,12 @@
 	<!-- 部署配置 -->
 	<distributionManagement>
 		<!-- <snapshotRepository>
-			<id>ossrh</id>
+			<id>saasxx-releases</id>
 			<name>SAASXX Release Repository</name>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</snapshotRepository> -->
 		<repository>
-			<id>ossrh</id>
+			<id>saasxx-snapshots</id>
 			<name>SAASXX Snapshot Repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</repository>
