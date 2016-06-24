@@ -190,20 +190,6 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<!-- 部署配置 -->
-	<distributionManagement>
-		<!-- <snapshotRepository>
-			<id>saasxx-releases</id>
-			<name>SAASXX Release Repository</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-		</snapshotRepository> -->
-		<repository>
-			<id>saasxx-snapshots</id>
-			<name>SAASXX Snapshot Repository</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</repository>
-	</distributionManagement>
-
 	<!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId和artifactId 即可 -->
 	<dependencyManagement>
 		<dependencies>
@@ -777,4 +763,28 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<profiles>
+		<profile>
+			<id>snapshots</id>
+			<!-- 部署配置 -->
+			<distributionManagement>
+				<repository>
+					<id>saasxx-snapshots</id>
+					<name>SAASXX Snapshot Repository</name>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+		<profile>
+			<id>releases</id>
+			<!-- 部署配置 -->
+			<distributionManagement>
+				<snapshotRepository>
+					<id>saasxx-releases</id>
+					<name>SAASXX Release Repository</name>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+	</profiles>
 </project>
