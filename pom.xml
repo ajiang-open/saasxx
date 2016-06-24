@@ -5,9 +5,38 @@
 	<artifactId>saasxx</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<modules>
-		<module>saasxx-framework</module>
-	</modules> 
+	
+	<name>SAASXX Framework</name>
+	<description>Full-featured java web development framework</description>
+	<url>https://github.com/saasxx-open/framework</url>
+	<organization>
+		<name>saasxx.com</name>
+		<url>https://github.com/saasxx-open/framework</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>pittlu</id>
+			<name>lujijiang</name>
+			<email>saasxx.com@gmail.com</email>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git://github.com/saasxx-open/framework</connection>
+		<developerConnection>scm:git:git://github.com/saasxx-open/framework</developerConnection>
+		<url>https://github.com/saasxx-open/framework</url>
+	</scm>
+	<issueManagement>
+		<system>Redmine</system>
+		<url>http://vssq.com</url>
+	</issueManagement>
+	
 	<properties>
 		<saasxx.version>0.0.1-SNAPSHOT</saasxx.version> 
 		<!-- 主要依赖库的版本定义 -->
@@ -163,18 +192,21 @@
 
 	<!-- 部署配置 -->
 	<distributionManagement>
-		
+		<!-- <snapshotRepository>
+			<id>ossrh</id>
+			<name>SAASXX Release Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</snapshotRepository> -->
+		<repository>
+			<id>ossrh</id>
+			<name>SAASXX Snapshot Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
 	</distributionManagement>
 
 	<!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId和artifactId 即可 -->
 	<dependencyManagement>
 		<dependencies>
-			<!-- framework -->
-			<dependency>
-				<groupId>com.saasxx</groupId>
-				<artifactId>saasxx-framework</artifactId>
-				<version>${saasxx.version}</version>
-			</dependency>
 			<!-- 基础库 -->
 			<dependency>
 				<groupId>cglib</groupId>
