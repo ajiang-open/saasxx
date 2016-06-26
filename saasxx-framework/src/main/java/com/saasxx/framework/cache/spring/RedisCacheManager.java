@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cache.Cache;
@@ -93,8 +94,7 @@ public class RedisCacheManager implements CacheManager, InitializingBean {
 		 */
 		private String prefix;
 
-		public RedisCache(JedisPool jedisPool, String prefix, String name,
-				int expiredSecond) {
+		public RedisCache(JedisPool jedisPool, String prefix, String name, int expiredSecond) {
 			this.jedisPool = jedisPool;
 			this.prefix = prefix;
 			this.name = name;
@@ -134,8 +134,7 @@ public class RedisCacheManager implements CacheManager, InitializingBean {
 				if (valueBytes.length == 0) {
 					return null;
 				}
-				ValueWrapper valueWrapper = Kryos.fromBytes(valueBytes,
-						RedisValueWrapper.class);
+				ValueWrapper valueWrapper = Kryos.fromBytes(valueBytes, RedisValueWrapper.class);
 				return valueWrapper;
 			} finally {
 				jedis.close();
@@ -150,8 +149,7 @@ public class RedisCacheManager implements CacheManager, InitializingBean {
 			keyBuilder.append(":");
 			if (key == null || !(key instanceof CharSequence)) {
 				keyBuilder.append("b64:");
-				key = Encodes.encodeBase64(Kryos.toBytes(new RedisValueWrapper(
-						key)));
+				key = Encodes.encodeBase64(Kryos.toBytes(new RedisValueWrapper(key)));
 			} else {
 				keyBuilder.append("str:");
 			}
@@ -189,8 +187,7 @@ public class RedisCacheManager implements CacheManager, InitializingBean {
 			put(key, value, expiredSecond);
 		}
 
-		public ValueWrapper putIfAbsent(Object key, Object value,
-				int expiredSecond) {
+		public ValueWrapper putIfAbsent(Object key, Object value, int expiredSecond) {
 			final ValueWrapper valueWrapper = get(key);
 			if (valueWrapper == null) {
 				put(key, value, expiredSecond);
@@ -224,8 +221,7 @@ public class RedisCacheManager implements CacheManager, InitializingBean {
 			keyBuilder.append(":*");
 			Jedis jedis = jedisPool.getResource();
 			try {
-				Iterator<String> iterator = jedis.keys(keyBuilder.toString())
-						.iterator();
+				Iterator<String> iterator = jedis.keys(keyBuilder.toString()).iterator();
 				while (iterator.hasNext()) {
 					String key = iterator.next();
 					jedis.del(key);
@@ -252,12 +248,10 @@ public class RedisCacheManager implements CacheManager, InitializingBean {
 				Set<String> originalKeySet = jedis.keys(prefix.concat("*"));
 				Set<Object> keySet = new LinkedHashSet<Object>();
 				for (String key : originalKeySet) {
-					String type = key.substring(prefix.length(),
-							prefix.length() + 3);
+					String type = key.substring(prefix.length(), prefix.length() + 3);
 					key = key.substring(prefix.length() + 4);
 					if ("b64".equals(type)) {
-						RedisValueWrapper valueWrapper = Kryos.fromBytes(
-								Encodes.decodeBase64(key),
+						RedisValueWrapper valueWrapper = Kryos.fromBytes(Encodes.decodeBase64(key),
 								RedisValueWrapper.class);
 						keySet.add(valueWrapper.get());
 					} else {
@@ -330,10 +324,8 @@ public class RedisCacheManager implements CacheManager, InitializingBean {
 
 										@Override
 										public Object getValue() {
-											ValueWrapper valueWrapper = RedisCache.this
-													.get(key);
-											return valueWrapper == null ? null
-													: valueWrapper.get();
+											ValueWrapper valueWrapper = RedisCache.this.get(key);
+											return valueWrapper == null ? null : valueWrapper.get();
 										}
 
 										@Override
@@ -352,6 +344,26 @@ public class RedisCacheManager implements CacheManager, InitializingBean {
 					};
 				}
 			};
+		}
+
+		@Override
+		public <T> T get(Object key, Callable<T> callable) {
+			ValueWrapper valueWrapper = get(key);
+			if (valueWrapper != null) {
+				return (T) valueWrapper.get();
+			}
+			return loadValue(key, callable);
+		}
+
+		private <T> T loadValue(Object key, Callable<T> valueLoader) {
+			T value;
+			try {
+				value = valueLoader.call();
+			} catch (Exception ex) {
+				throw new ValueRetrievalException(key, valueLoader, ex);
+			}
+			put(key, value);
+			return value;
 		}
 	}
 
@@ -454,8 +466,7 @@ public class RedisCacheManager implements CacheManager, InitializingBean {
 		Jedis jedis = jedisPool.getResource();
 		try {
 			Set<String> cacheNameSet = new LinkedHashSet<String>();
-			Iterator<String> iterator = jedis.keys(keyBuilder.toString())
-					.iterator();
+			Iterator<String> iterator = jedis.keys(keyBuilder.toString()).iterator();
 			while (iterator.hasNext()) {
 				String key = iterator.next();
 				cacheNameSet.add(jedis.get(key));
@@ -484,8 +495,7 @@ public class RedisCacheManager implements CacheManager, InitializingBean {
 		keyBuilder.append(":*");
 		Jedis jedis = jedisPool.getResource();
 		try {
-			Iterator<String> iterator = jedis.keys(keyBuilder.toString())
-					.iterator();
+			Iterator<String> iterator = jedis.keys(keyBuilder.toString()).iterator();
 			while (iterator.hasNext()) {
 				String key = iterator.next();
 				jedis.del(key);
