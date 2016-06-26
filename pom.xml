@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.saasxx</groupId>
 	<artifactId>saasxx</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${saasxx.version}</version>
 	<packaging>pom</packaging>
 	
 	<name>SAASXX Framework</name>
@@ -120,6 +120,7 @@
 		<!-- Server Begin -->
 		<!-- jetty -->
 		<jetty.version>9.3.7.v20160115</jetty.version>
+		<el.version>2.2.4</el.version>
 		<!-- Server End -->
 		<!-- plugins的版本设定 -->
 		<maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
@@ -686,6 +687,16 @@
 				<artifactId>jetty-jsp</artifactId>
 				<version>${jetty.version}</version>
 				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>javax.el-api</artifactId>
+				<version>${el.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.web</groupId>
+				<artifactId>javax.el</artifactId>
+				<version>${el.version}</version>
 			</dependency>
 			<!-- Server End -->
 		</dependencies>
