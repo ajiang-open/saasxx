@@ -807,4 +807,7 @@
 			</distributionManagement>
 		</profile>
 	</profiles>
+	<modules>
+		<module>saasxx-framework</module>
+	</modules>
 </project>
