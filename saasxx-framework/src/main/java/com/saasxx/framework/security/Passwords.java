@@ -1,7 +1,10 @@
 package com.saasxx.framework.security;
 
+import java.io.UnsupportedEncodingException;
+
 import org.springframework.util.Assert;
 
+import com.saasxx.framework.Lang;
 import com.saasxx.framework.data.Encodes;
 
 /**
@@ -30,13 +33,18 @@ public class Passwords {
 	 * @param userVo
 	 * @param salt
 	 * @return
+	 * @throws UnsupportedEncodingException
 	 */
 	public static String encryptPassword(String password, String salt) {
 		Assert.notNull(password, "密码不能为空");
-		byte[] hashPassword = Digests.digest(password.getBytes(), HASH_ALGORITHM,
-				salt == null ? null : Encodes.decodeHex(salt), HASH_INTERATIONS);
-		password = Encodes.encodeHex(hashPassword);
-		return password;
+		try {
+			byte[] hashPassword = Digests.digest(password.getBytes("UTF-8"), HASH_ALGORITHM,
+					salt == null ? null : Encodes.decodeHex(salt), HASH_INTERATIONS);
+			password = Encodes.encodeHex(hashPassword);
+			return password;
+		} catch (UnsupportedEncodingException e) {
+			throw Lang.unchecked(e);
+		}
 	}
 
 	/**

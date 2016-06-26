@@ -24,6 +24,7 @@ import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.Assert;
 
 import com.saasxx.framework.Lang;
 import com.saasxx.framework.data.Jsons;
@@ -52,6 +53,10 @@ public class JWTShiroRealm extends ShiroRealm implements InitializingBean {
 	 * 订阅者
 	 */
 	private String audience = "audience";
+	/**
+	 * 应用名
+	 */
+	private String appName;
 
 	public String getIssuer() {
 		return issuer;
@@ -67,6 +72,14 @@ public class JWTShiroRealm extends ShiroRealm implements InitializingBean {
 
 	public void setAudience(String audience) {
 		this.audience = audience;
+	}
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
 
 	public boolean supports(AuthenticationToken token) {
@@ -161,18 +174,19 @@ public class JWTShiroRealm extends ShiroRealm implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		File dir = new File(System.getProperty("java.io.tmpdir"), "circlexx");
+		Assert.notNull(appName, "The appName should not be null");
+		File dir = new File(System.getProperty("java.io.tmpdir"), appName);
 		dir = new File(dir, System.getProperty("spring.profiles.active"));
 		File keyFile = new File(dir, "jwt.key");
 		if (keyFile.isFile()) {
-			String json = FileUtils.readFileToString(keyFile);
+			String json = FileUtils.readFileToString(keyFile, "UTF-8");
 			Map<String, Object> params = Jsons.fromJson(json, Map.class);
 			authorizationKey = new RsaJsonWebKey(params);
 		} else {
 			authorizationKey = RsaJwkGenerator.generateJwk(2048);
 			authorizationKey.setKeyId(UUID.randomUUID().toString());
 			String json = authorizationKey.toJson(OutputControlLevel.INCLUDE_PRIVATE);
-			FileUtils.writeStringToFile(keyFile, json);
+			FileUtils.writeStringToFile(keyFile, json, "UTF-8");
 		}
 		super.afterPropertiesSet();
 	}
