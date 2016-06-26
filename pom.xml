@@ -144,6 +144,26 @@
 			</snapshots>
 		</repository>
 		<repository>
+			<id>Sonatype Public</id>
+			<url>https://oss.sonatype.org/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>Sonatype Staging</id>
+			<url>https://oss.sonatype.org/content/groups/staging</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
 			<id>Apache Snapshots</id>
 			<url>https://repository.apache.org/snapshots/</url>
 			<snapshots>
