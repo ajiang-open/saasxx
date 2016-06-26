@@ -213,6 +213,12 @@
 	<!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId和artifactId 即可 -->
 	<dependencyManagement>
 		<dependencies>
+			<!-- framework -->
+			<dependency>
+				<groupId>com.saasxx</groupId>
+				<artifactId>saasxx-framework</artifactId>
+				<version>${saasxx.version}</version>
+			</dependency>
 			<!-- 基础库 -->
 			<dependency>
 				<groupId>cglib</groupId>
