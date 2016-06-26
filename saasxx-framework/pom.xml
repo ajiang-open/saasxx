@@ -5,6 +5,7 @@
     <artifactId>saasxx</artifactId>
     <version>0.0.2-SNAPSHOT</version>
   </parent>
+  <name>saasxx framework</name>
   <artifactId>saasxx-framework</artifactId>
   <dependencies>
 		<!-- 基础库 -->
