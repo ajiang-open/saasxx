@@ -20,7 +20,7 @@ a, a:focus, a:hover {
  */
 html, body {
 	height: 100%;
-	background-color: #4ba1d3;
+	background-color: rgb(42,117,173);
 }
 
 body {

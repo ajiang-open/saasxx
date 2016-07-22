@@ -13,8 +13,11 @@ import org.springframework.util.Assert;
 
 import com.saasxx.core.module.account.constant.UserGender;
 import com.saasxx.core.module.account.constant.UserStatus;
+import com.saasxx.core.module.account.dao.PreUserRepository;
 import com.saasxx.core.module.account.dao.UserRepository;
+import com.saasxx.core.module.account.schema.PPreUser;
 import com.saasxx.core.module.account.schema.PUser;
+import com.saasxx.core.module.account.vo.VPreUser;
 import com.saasxx.core.module.account.vo.VUser;
 import com.saasxx.core.module.common.dao.FileRepository;
 import com.saasxx.core.module.common.schema.PFile;
@@ -40,6 +43,8 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
+	PreUserRepository preUserRepository;
+	@Autowired
 	FileRepository fileRepository;
 
 	public void saveUser(VUser vUser) {
@@ -48,7 +53,7 @@ public class UserService {
 			pUser = new PUser();
 			pUser.setTel(vUser.getTel());
 			// 设置临时值
-			pUser.setEmail(UUID.randomUUID().toString().concat("@yuequanzi.com"));
+			pUser.setEmail(UUID.randomUUID().toString().concat("@saasxx.com"));
 			pUser.setGender(UserGender.male);
 			pUser.setStatus(UserStatus.registered);
 		}
@@ -139,6 +144,25 @@ public class UserService {
 		token.setUsername(pUser.getTel());
 		token.setPassword(vUser.getPassword().toCharArray());
 		SecurityUtils.getSubject().login(token);
+	}
+
+	public void signupPreUser(VPreUser preUser) {
+		PUser pUser = userRepository.findByEmail(preUser.getEmail());
+		if (pUser == null) {
+			pUser = new PUser();
+		}
+		pUser.setEmail(preUser.getEmail());
+		pUser.setTel(preUser.getTel());
+		pUser.setRealName(preUser.getRealName());
+		// 设置临时值
+		pUser.setGender(UserGender.male);
+		pUser.setStatus(UserStatus.registered);
+		userRepository.save(pUser);
+		// 保存预设电话
+		PPreUser pPreUser = new PPreUser();
+		pPreUser.setUser(pUser);
+		pPreUser.setAdvice(preUser.getAdvice());
+		preUserRepository.save(pPreUser);
 	}
 
 }

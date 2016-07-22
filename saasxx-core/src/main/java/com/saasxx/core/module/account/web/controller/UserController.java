@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.saasxx.core.module.account.service.UserService;
+import com.saasxx.core.module.account.vo.VPreUser;
 import com.saasxx.framework.Lang;
 import com.saasxx.framework.data.Captchas;
 import com.saasxx.framework.log.Log;
 import com.saasxx.framework.log.Logs;
+import com.saasxx.framework.web.springmvc.annotation.RequestForm;
 
 /**
  * Created by lujijiang on 16/6/10.
@@ -47,6 +49,14 @@ public class UserController {
 	public Object checkEmail(@RequestParam("value") String value) {
 		log.info("The sign up email is {}", value);
 		userService.checkSignUpEmail(value);
+		return Lang.newMap();
+	}
+
+	@RequestMapping("signup")
+	@ResponseBody
+	public Object signup(@RequestForm VPreUser preUser) {
+		log.info("preUser is {}", preUser);
+		userService.signupPreUser(preUser);
 		return Lang.newMap();
 	}
 }
