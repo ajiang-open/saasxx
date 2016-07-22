@@ -1,0 +1,87 @@
+<ion-view view-title="第二步 - 新建 - 圈子 - 悦圈子"> 
+
+	<!-- 顶部导航条 -->
+	<div class="bar bar-header">
+		<div class="buttons">
+			<a ng-click="$back()" class="button icon ion-ios-arrow-back"></a>
+		</div>
+		<h1 class="title">新建圈子 - 第二步</h1>
+	</div>
+	<!-- 中部内容 --> 
+	<ion-content class="has-header">
+	
+		<form class="list" ng-submit="f.saveCircle()">
+			<div class="item item-divider">
+				信息
+			</div>
+			<label class="item item-input">
+				<span class="input-label">名称</span>
+			    <input ng-model="v.circle.name" readonly="readonly" title="圈子名称"  type="text" required="required" validate>
+			</label>
+			<label class="item item-input">
+				<span class="input-label">热词</span>
+			    <input ng-model="v.circle.keywords" title="圈子名称"  type="text" placeholder="请输入圈子热词，如：美女，帅哥" required="required" validate>
+			</label>
+			<div class="item item-divider">
+				总部：默认集合地点
+			</div>
+			<label class="item item-input item-select">
+				<span class="input-label">省</span>
+			    <select ng-model="v.circle.headquarter.provinceCode" ng-change="f.changeArea(v.circle.headquarter.provinceCode,v.address.cities,v.address.regions)">
+						<option ng-repeat="area in v.address.provinces" value="{{area.code}}">{{area.name}}</option>
+				</select>
+			</label>
+			<label class="item item-input item-select">
+				<span class="input-label">市</span>
+				<select ng-model="v.circle.headquarter.cityCode"  ng-change="f.changeArea(v.circle.headquarter.cityCode,v.address.regions)">
+						<option ng-repeat="area in v.address.cities" value="{{area.code}}">{{area.name}}</option>
+				</select>
+			</label>
+			<label class="item item-input item-select">
+				<span class="input-label">区</span>
+			    <select ng-model="v.circle.headquarter.regionCode">
+						<option ng-repeat="area in v.address.regions" value="{{area.code}}">{{area.name}}</option>
+				</select>
+			</label>
+			<label class="item item-input">
+				<span class="input-label">地点</span>
+			    <input ng-model="v.circle.headquarter.address" title="圈子总部地点"  type="text" placeholder="请输入圈子总部详细地点" required="required" validate>
+			</label>
+			
+			<div class="item item-divider">
+				介绍
+			</div>
+			<label class="item item-input">
+    			<textarea ng-model="v.circle.description" rows="10" placeholder="请输入引人注目且准确描述本圈子的内容"></textarea>
+  			</label>
+			<div class="item item-divider">
+				照片：至少一张，首张封面
+			</div>
+			<div align="center" class="item">
+				<upload ng-repeat="avatar in v.circle.avatars" url="common/upload" path="circle" style="float:left;" done="f.uploadComplete(data,$index)">
+					<img class="button button-outline" style="width: {{($width-32)/3}}px;" src="{{avatar+'?img:{width:'+$width/3+',height:'+$width/3+'}'}}" alt="点击上传图片"/>
+				</upload>
+				<upload url="common/upload" path="circle" style="float:left;" done="f.uploadComplete(data)">
+					<button class="button button-outline icon ion-ios-plus-empty" style="width: {{($width-32)/3}}px;height:{{($width-32)/3-24}}px;">
+				</upload>
+			</div>
+			<div class="item item-divider">
+				热衷：圈子兴趣点，最多三个
+			</div>
+			<li ng-repeat="hobby in v.circle.hobbies" class="item item-toggle">
+				{{hobby.name}}
+				<label class="toggle toggle-balanced">
+					<input type="checkbox" ng-model="hobby.value">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
+			</li>
+			<div class="item">
+				<button type="submit" class="button button-full button-positive">下一步</button>
+			</div>
+		</form>
+		
+	</ion-content>
+	
+</ion-view>

@@ -1,0 +1,42 @@
+<ion-view view-title="我的 - 悦圈子 - 不再孤单">
+	<!-- 顶部导航条 -->
+	<div class="bar bar-header bar-dark">
+		<div class="buttons">
+			<a ng-click="$back()" class="button button-stable icon-left ion-chevron-left">返回</a>
+		</div>
+		<h1 class="title">注册</h1>
+		<div class="buttons">
+			<a class="button button-light icon-right ion-home" href="#/"></a>
+		</div>
+	</div>
+	<!-- 中部内容 --> 
+	<ion-content class="has-header">
+		<form class="list" ng-submit="f.signup()">
+			<div class="item item-input-inset">
+				<label class="item-input-wrapper"> <input ng-model="v.user.tel" title="手机号" type="tel" required="required" validate
+					placeholder="请输入手机号">
+				</label>
+			</div>
+			<div class="item item-input-inset">
+				<label class="item-input-wrapper"> <input ng-model="v.imageValidateCode" title="图片验证码" type="text" pattern="\d*" required="required" validate
+														  maxlength="4"  placeholder="请输入图片验证码">
+				</label>
+				<a ng-click="f.changeImageValidateCode()" class="button button-small" style="background-image: url('user/imageValidateCode?key={{v.key}}');width: 100px;"></a>
+			</div>
+			<div class="item item-input-inset">
+				<label class="item-input-wrapper"> <input ng-model="v.user.validateCode" title="验证码" type="text" pattern="\d*" required="required" validate
+														  maxlength="6" placeholder="请输入手机验证码">
+				</label>
+				<a ng-click="f.sendSmsValidateCode()" ng-disabled="v.smsClock>0" class="button button-small button-balanced" style="width: 100px;">发送验证码{{v.smsClock>0?'('+v.smsClock+')':''}}</a>
+			</div>
+			<div class="item item-input-inset">
+				<button class="button button-full button-positive" type="submit">注册</button>
+			</div>
+			<div class="item item-content text-center">
+				<small class="item-note">
+					已经注册？快去<a href="#/account/signin">登录</a>吧
+				</small>
+			</div>
+		</form>
+	</ion-content>
+</ion-view>

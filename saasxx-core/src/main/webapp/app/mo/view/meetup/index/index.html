@@ -1,0 +1,51 @@
+<ion-view view-title="活动 - 悦圈子 - 不再孤单"> 
+
+	<!-- 顶部导航条 -->
+	<div class="bar bar-header">
+		<h1 class="title">活动</h1>
+	</div>
+	<div class="bar bar-subheader item-input-inset">
+		<label class="item-input-wrapper"> 
+			<i class="icon ion-ios-search placeholder-icon"></i>
+			<input type="search" placeholder="请输入关键字"  ng-change="doSearch()" ng-model="data.search.keywords">
+		</label>
+		<button class="button" ng-click="doSearch()">搜索</button>
+	</div>
+	<!-- 中部内容 --> 
+	<ion-content class="has-subheader">
+		
+		<div class="item button-bar">
+			<a ng-click="f.setOwn(false)" class="button button-small {{v.example.own?'':'button-dark'}}">所有活动</a>
+			<a ng-click="f.setOwn(true)" class="button button-small {{!v.example.own?'':'button-dark'}}">我的活动</a>
+		</div>
+		
+	
+		<div ng-repeat="meetup in v.meetups" class="list card">
+			<div class="item item-avatar item-button-right">
+				<img src="app/mo/theme/image/avator.png">
+				<h2>{{meetup.title}}</h2>
+				<p>{{meetup.time}}</p>
+				<button ng-if="!meetup.own" ng-click="f.joinMeetup($index)" class="button button-balanced button-clear">
+			      <i class="icon ion-ios-plus"></i>
+			    </button>
+			</div>
+		
+			<div class="item item-body">
+				<ion-slide-box>
+					<ion-slide ng-repeat="avatar in meetup.avatars">
+						<div class="box">
+							<img class="full-image" src="{{avatar}}?img:{width:1024,height:1024}">
+						</div>
+					</ion-slide>
+				</ion-slide-box>
+				<p>{{meetup.description}}</p>
+				<p>
+					<a href="#" class="subdued">5评论</a>
+				</p>
+			</div>
+			
+		</div>
+		
+	</ion-content>
+	
+</ion-view>

@@ -1,0 +1,73 @@
+<ion-view view-title="我的 - 悦圈子 - 不再孤单">
+	<!-- 顶部导航条 -->
+	<div class="bar bar-header bar-dark">
+		<div class="buttons">
+			<a ng-click="$back()" class="button button-stable icon-left ion-chevron-left">返回</a>
+		</div>
+		<h1 class="title">还差一步</h1>
+		<div class="buttons">
+			<a class="button button-light icon-right ion-home" href="#/"></a>
+		</div>
+	</div>
+	<!-- 中部内容 --> 
+	<ion-content class="has-header">
+		<form class="list" ng-submit="f.signup()">
+			<div class="item item-divider">
+				基本信息
+			</div>
+			<label class="item item-input">
+				<span class="input-label">邮箱</span>
+			    <input ng-model="v.user.email" title="登录邮箱" type="email" required="required" validate remote="user/checkEmail.do"
+					placeholder="请输入登录邮箱">
+			</label>
+			<label class="item item-input">
+				<span class="input-label">密码</span>
+			    <input ng-model="v.user.password" title="登录密码" type="password" required="required" validate
+					placeholder="请输入登录密码">
+			</label>
+			<label class="item item-input">
+				<span class="input-label">姓名</span>
+			    <input ng-model="v.user.realName" title="真实姓名" type="text" required="required" validate
+					placeholder="请输入真实姓名">
+			</label>
+			<label class="item item-input item-select">
+			   	<span class="input-label">性别</span>
+			   	<select ng-model="v.user.gender">
+			   		<option value="female">女</option>
+					<option value="male">男</option>
+				</select>
+			</label>
+			
+			<div class="item item-divider">
+				照片：至少一张，首张头像
+			</div>
+			
+			<div align="center" class="item">
+				<upload ng-repeat="avatar in v.user.avatars" url="common/upload" path="user" style="float:left;" done="f.uploadComplete(data,$index)">
+					<img class="button button-outline" style="width: {{($width-32)/3}}px;" src="{{avatar+'?img:{width:'+$width/3+',height:'+$width/3+'}'}}" alt="点击上传图片"/>
+				</upload>
+				<upload url="common/upload" path="user" style="float:left;" done="f.uploadComplete(data)">
+					<button class="button button-outline icon ion-ios-plus-empty" style="width: {{($width-32)/3}}px;height:{{($width-32)/3-24}}px;">
+				</upload>
+			</div>
+			
+			
+			
+			<div class="item item-divider">
+				兴趣爱好：至少三项
+			</div>
+			<li ng-repeat="hobby in v.user.hobbies" class="item item-toggle">
+				{{hobby.name}}
+				<label class="toggle toggle-balanced">
+					<input type="checkbox" ng-model="hobby.value">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
+			</li>
+			<div class="item item-input-inset">
+				<button class="button button-full button-positive" type="submit">完成</button>
+			</div>
+		</form>
+	</ion-content>
+</ion-view>
