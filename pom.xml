@@ -825,5 +825,6 @@
 	</profiles>
 	<modules>
 		<module>saasxx-framework</module>
+		<module>saasxx-core</module>
 	</modules>
 </project>
