@@ -1,15 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>悦圈子</title>
-<script type="text/javascript">
-	if ((navigator.userAgent.match(/(iPhone|iPod|Android|ios|iPad)/i))) {
-		window.location.href = "mo.html";
-	}
-	else {
-		window.location.href = "pc.html";
-	}
-</script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAAS++ - 更智能，更实用 - more smart,more useful</title>
+<link href="lib/jquery/plugins/bootstrap/3.3.6/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="static/css/main.css" rel="stylesheet">
+<!--[if lt IE 9]>
+      <script src="lib/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="lib/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
+<body>
+
+	<div class="site-wrapper">
+		<div class="site-wrapper-inner">
+			<div class="cover-container">
+				<div class="masthead clearfix">
+					<div class="inner">
+						<h1 class="masthead-brand">SAAS++</h1>
+						<nav>
+							<ul class="nav masthead-nav">
+								<li class="active"><a href="index.html">主页</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<div class="inner cover">
+					<h1 class="cover-heading">即将上线，敬请期待...</h1>
+					<p class="lead">SAAS++
+						是一个基于AI助理的软件服务（SAAS）平台，我们的愿景是成为世界上最智能的软件服务平台，我们的使命是让世界不再有难用的软件服务。</p>
+					<p class="lead">
+						<a href="javascript:void(0)" class="btn btn-lg btn-default"
+							data-toggle="modal" data-target="#signup-form">马上注册，及时获取通知</a>
+					</p>
+				</div>
+				<div id="signup-form" class="modal fade signup-form">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="关闭">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title">请输入信息</h4>
+							</div>
+							<div class="modal-body">
+								<form class="form-horizontal">
+									<div class="form-group">
+										<label for="email" class="col-sm-3 control-label">常用邮箱</label>
+										<div class="col-sm-9">
+											<input id="email" type="email" class="form-control" placeholder="请输入常用邮箱">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="tel" class="col-sm-3 control-label">手机号码</label>
+										<div class="col-sm-9">
+											<input id="tel" type="tel" class="form-control" placeholder="请输入手机号码">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="name" class="col-sm-3 control-label">真实姓名</label>
+										<div class="col-sm-9">
+											<input id="name" type="text" class="form-control" placeholder="请输入真实姓名">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="advice" class="col-sm-3 control-label">咨询建议</label>
+										<div class="col-sm-9">
+											<textarea id="advice" class="form-control" placeholder="请输入您的问题或建议"></textarea>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary">注册</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
+				<div class="mastfoot">
+					<div class="inner">
+						<p>©2016 SAAS++</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- JS部分 -->
+	<script src="lib/jquery/1.12.4/jquery-1.12.4.min.js"></script>
+	<script src="lib/jquery/plugins/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
 </html>

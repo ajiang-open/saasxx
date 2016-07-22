@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.saasxx.core.module.account.constant.UserGender;
-import com.saasxx.core.module.circle.vo.VHobby;
 
 /**
  * 用户信息值对象
@@ -47,10 +46,6 @@ public class VUser {
 	 * 照片列表
 	 */
 	List<String> avatars;
-	/**
-	 * 喜好列表
-	 */
-	List<VHobby> hobbies;
 
 	public String getId() {
 		return id;
@@ -116,19 +111,10 @@ public class VUser {
 		this.avatars = avatars;
 	}
 
-	public List<VHobby> getHobbies() {
-		return hobbies;
-	}
-
-	public void setHobbies(List<VHobby> hobbies) {
-		this.hobbies = hobbies;
-	}
-
 	@Override
 	public String toString() {
 		return "VUser [id=" + id + ", tel=" + tel + ", email=" + email + ", password=" + password + ", realName="
-				+ realName + ", gender=" + gender + ", validateCode=" + validateCode + ", avatars=" + avatars
-				+ ", hobbies=" + hobbies + "]";
+				+ realName + ", gender=" + gender + ", validateCode=" + validateCode + ", avatars=" + avatars + "]";
 	}
 
 }

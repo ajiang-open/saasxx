@@ -16,9 +16,6 @@ import com.saasxx.core.module.account.constant.UserStatus;
 import com.saasxx.core.module.account.dao.UserRepository;
 import com.saasxx.core.module.account.schema.PUser;
 import com.saasxx.core.module.account.vo.VUser;
-import com.saasxx.core.module.circle.dao.HobbyRepository;
-import com.saasxx.core.module.circle.schema.PHobby;
-import com.saasxx.core.module.circle.vo.VHobby;
 import com.saasxx.core.module.common.dao.FileRepository;
 import com.saasxx.core.module.common.schema.PFile;
 import com.saasxx.framework.Lang;
@@ -44,8 +41,6 @@ public class UserService {
 	UserRepository userRepository;
 	@Autowired
 	FileRepository fileRepository;
-	@Autowired
-	HobbyRepository hobbyRepository;
 
 	public void saveUser(VUser vUser) {
 		PUser pUser = userRepository.findByTel(vUser.getTel());
@@ -117,16 +112,6 @@ public class UserService {
 				file.setPath(avatar);
 				fileRepository.save(file);
 				pUser.getAvatars().add(file);
-			}
-		}
-		// 设置个人喜好
-		if (vUser.getHobbies() != null) {
-			pUser.setHobbies(Lang.newList());
-			for (VHobby vHobby : vUser.getHobbies()) {
-				if (vHobby.isValue()) {
-					PHobby pHobby = hobbyRepository.findOne(vHobby.getId());
-					pUser.getHobbies().add(pHobby);
-				}
 			}
 		}
 		userRepository.save(pUser);

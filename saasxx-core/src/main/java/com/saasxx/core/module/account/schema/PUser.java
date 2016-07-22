@@ -31,12 +31,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.saasxx.core.module.account.constant.UserGender;
 import com.saasxx.core.module.account.constant.UserStatus;
-import com.saasxx.core.module.circle.schema.PCircle;
-import com.saasxx.core.module.circle.schema.PHobby;
-import com.saasxx.core.module.circle.schema.PTopic;
 import com.saasxx.core.module.common.schema.PFile;
-import com.saasxx.core.module.meetup.schema.PComment;
-import com.saasxx.core.module.meetup.schema.PMeetup;
 import com.saasxx.framework.dao.orm.annotation.Comment;
 import com.saasxx.framework.dao.orm.schema.IdEntity;
 
@@ -78,6 +73,7 @@ public class PUser extends IdEntity {
 	 * 真实姓名
 	 */
 	@Column(length = 128)
+	@NotNull
 	@Comment("真实姓名")
 	String realName;
 	/**
@@ -132,32 +128,6 @@ public class PUser extends IdEntity {
 	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinTable(inverseJoinColumns = @JoinColumn(name = "hobby"), // 被维护端外键
 			joinColumns = @JoinColumn(name = "user"))
-	// 维护端外键
-	List<PHobby> hobbies;
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, include = "non-lazy")
-	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinTable(inverseJoinColumns = @JoinColumn(name = "circle"), // 被维护端外键
-			joinColumns = @JoinColumn(name = "user"))
-	// 维护端外键
-	List<PCircle> circles;
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, include = "non-lazy")
-	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinTable(inverseJoinColumns = @JoinColumn(name = "meetup"), // 被维护端外键
-			joinColumns = @JoinColumn(name = "user"))
-	// 维护端外键
-	List<PMeetup> meetups;
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, include = "non-lazy")
-	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinTable(inverseJoinColumns = @JoinColumn(name = "topic"), // 被维护端外键
-			joinColumns = @JoinColumn(name = "user"))
-	// 维护端外键
-	List<PTopic> topics;
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, include = "non-lazy")
-	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinTable(inverseJoinColumns = @JoinColumn(name = "comment"), // 被维护端外键
-			joinColumns = @JoinColumn(name = "user"))
-	// 维护端外键
-	List<PComment> comments;
 
 	public String getTel() {
 		return tel;
@@ -253,30 +223,6 @@ public class PUser extends IdEntity {
 
 	public void setRoles(List<PRole> roles) {
 		this.roles = roles;
-	}
-
-	public List<PHobby> getHobbies() {
-		return hobbies;
-	}
-
-	public void setHobbies(List<PHobby> hobbies) {
-		this.hobbies = hobbies;
-	}
-
-	public List<PCircle> getCircles() {
-		return circles;
-	}
-
-	public void setCircles(List<PCircle> circles) {
-		this.circles = circles;
-	}
-
-	public List<PMeetup> getMeetups() {
-		return meetups;
-	}
-
-	public void setMeetups(List<PMeetup> meetups) {
-		this.meetups = meetups;
 	}
 
 }
