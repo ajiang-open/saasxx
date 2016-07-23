@@ -37,7 +37,9 @@ body {
 	min-height: 100%;
 	-webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
 	box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
-	background-image: url(../images/index-background.jpg);
+	background-image: url(../images/background.jpg);
+	background-repeat:no-repeat;
+    background-position:center;
 }
 
 .site-wrapper-inner {
