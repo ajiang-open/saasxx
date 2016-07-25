@@ -104,6 +104,24 @@
 	<script type="text/javascript">
 	$(function(){
 		$("#signup_form").submit(function(){
+			var input = $("input[name='email']","#signup_form");
+			if(input.val()==''){
+				alert("邮箱不能为空");
+				input.focus();
+				return false;
+			}
+			input = $("input[name='tel']","#signup_form");
+			if(input.val()==''){
+				alert("电话号码不能为空");
+				input.focus();
+				return false;
+			}
+			input = $("input[name='realName']","#signup_form");
+			if(input.val()==''){
+				alert("真实姓名不能为空");
+				input.focus();
+				return false;
+			}
 			$.ajax({
 				url:"user/signup",
 				type:"post",
