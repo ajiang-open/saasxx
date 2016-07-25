@@ -106,13 +106,13 @@
 		$("#signup_form").submit(function(){
 			var input = $("input[name='email']","#signup_form");
 			if(input.val()==''){
-				alert("邮箱不能为空");
+				alert("常用邮箱不能为空");
 				input.focus();
 				return false;
 			}
 			input = $("input[name='tel']","#signup_form");
 			if(input.val()==''){
-				alert("电话号码不能为空");
+				alert("手机号码不能为空");
 				input.focus();
 				return false;
 			}
