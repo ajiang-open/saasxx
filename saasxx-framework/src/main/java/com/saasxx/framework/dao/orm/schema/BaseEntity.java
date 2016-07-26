@@ -13,6 +13,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.saasxx.framework.dao.orm.annotation.Comment;
@@ -36,6 +38,7 @@ public abstract class BaseEntity implements Serializable, Cloneable {
 	 */
 	@NotNull
 	@Column(name = "disabled_", columnDefinition = "decimal(1,0)")
+	@Field(name = "disabled", analyze = Analyze.NO)
 	@Comment("无效状态位，默认有效")
 	protected Boolean disabled;
 	/**
