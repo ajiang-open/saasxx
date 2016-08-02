@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HEROES } from './mock-heroes';
-import { HEROES } from './hero';
+import { Hero } from './hero';
 
 @Injectable()
 export class HeroService {
@@ -9,7 +9,7 @@ export class HeroService {
     }
     getHeroesSlowly() {
         return new Promise<Hero[]>(resolve =>
-            setTimeout(() => resolve(HEROES), 2000) // 2 seconds
+            setTimeout(() => resolve(HEROES), 1000) // 2 seconds
         );
     }
     getHero(id: number) {
