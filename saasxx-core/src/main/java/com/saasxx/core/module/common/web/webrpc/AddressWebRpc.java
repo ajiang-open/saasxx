@@ -11,12 +11,12 @@ import com.saasxx.framework.web.webrpc.annotation.WebRpc;
 
 @Component
 public class AddressWebRpc {
-	@Autowired
-	AddressService addressService;
+    @Autowired
+    AddressService addressService;
 
-	@WebRpc
-	public List<VArea> findAreas(VArea vArea) {
-		return addressService.findAreas(vArea);
-	}
+    @WebRpc
+    public List<VArea> findAreas(VArea vArea) {
+        return addressService.findAreas(vArea);
+    }
 
 }

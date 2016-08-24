@@ -13,21 +13,21 @@ import com.saasxx.framework.web.webrpc.annotation.WebRpc;
 @Component
 public class SignUpWebRpc {
 
-	static Log log = Logs.getLog();
+    static Log log = Logs.getLog();
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
-	@WebRpc
-	public Object step2(VUser vUser) {
-		String id = userService.checkValidateCode(vUser);
-		return Lang.newMap("id", id);
-	}
+    @WebRpc
+    public Object step2(VUser vUser) {
+        String id = userService.checkValidateCode(vUser);
+        return Lang.newMap("id", id);
+    }
 
-	@WebRpc
-	public Object signup(VUser vUser) {
-		userService.signup(vUser);
-		return Lang.newMap();
-	}
+    @WebRpc
+    public Object signup(VUser vUser) {
+        userService.signup(vUser);
+        return Lang.newMap();
+    }
 
 }

@@ -24,44 +24,44 @@ import com.saasxx.framework.dao.orm.schema.IdEntity;
 @DynamicUpdate
 @DynamicInsert
 public class PAddress extends IdEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8447627071600803353L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8447627071600803353L;
 
-	@Comment("所属区")
-	@NotNull
-	@ManyToOne(cascade = CascadeType.REFRESH, optional = false, fetch = FetchType.LAZY)
-	PArea region;
+    @Comment("所属区")
+    @NotNull
+    @ManyToOne(cascade = CascadeType.REFRESH, optional = false, fetch = FetchType.LAZY)
+    PArea region;
 
-	@Comment("详细地址")
-	String address;
+    @Comment("详细地址")
+    String address;
 
-	@Comment("邮政编码")
-	String zipCode;
+    @Comment("邮政编码")
+    String zipCode;
 
-	public PArea getRegion() {
-		return region;
-	}
+    public PArea getRegion() {
+        return region;
+    }
 
-	public void setRegion(PArea region) {
-		this.region = region;
-	}
+    public void setRegion(PArea region) {
+        this.region = region;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public String getZipCode() {
-		return zipCode;
-	}
+    public String getZipCode() {
+        return zipCode;
+    }
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
 
 }

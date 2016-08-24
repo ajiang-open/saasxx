@@ -17,24 +17,24 @@ import com.saasxx.framework.web.webrpc.annotation.WebRpc;
 @Component
 public class SignInWebRpc {
 
-	static Log log = Logs.getLog();
+    static Log log = Logs.getLog();
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
-	@Autowired
-	JWTShiroRealm jwtShiroRealm;
+    @Autowired
+    JWTShiroRealm jwtShiroRealm;
 
-	@WebRpc
-	public Object signin(VUser vUser) {
-		// 进行登录
-		userService.signin(vUser);
-		// 回写JWT用户会话令牌信息
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.YEAR, 1);
-		String jwt = jwtShiroRealm.createJWT(Shiros.currentUser().getUsername(), Shiros.currentUser().getAttributes(),
-				calendar.getTime());
-		return Lang.newMap("jwt", jwt);
-	}
+    @WebRpc
+    public Object signin(VUser vUser) {
+        // 进行登录
+        userService.signin(vUser);
+        // 回写JWT用户会话令牌信息
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, 1);
+        String jwt = jwtShiroRealm.createJWT(Shiros.currentUser().getUsername(), Shiros.currentUser().getAttributes(),
+                calendar.getTime());
+        return Lang.newMap("jwt", jwt);
+    }
 
 }

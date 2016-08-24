@@ -29,65 +29,65 @@ import com.saasxx.framework.dao.orm.schema.IdEntity;
 @DynamicUpdate
 @DynamicInsert
 public class PRole extends IdEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6016142750537903140L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6016142750537903140L;
 
-	@Comment("角色标签")
-	@Column(length = 256, unique = true)
-	@NotNull
-	private String label;
+    @Comment("角色标签")
+    @Column(length = 256, unique = true)
+    @NotNull
+    private String label;
 
-	@Comment("角色名")
-	@Column(length = 128, unique = true)
-	@NotNull
-	private String name;
-	/**
-	 * 角色所包含的用户信息
-	 */
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, include = "non-lazy")
-	@ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "roles", // 通过维护端的属性关联
-			fetch = FetchType.LAZY)
-	List<PUser> users;
+    @Comment("角色名")
+    @Column(length = 128, unique = true)
+    @NotNull
+    private String name;
+    /**
+     * 角色所包含的用户信息
+     */
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, include = "non-lazy")
+    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "roles", // 通过维护端的属性关联
+            fetch = FetchType.LAZY)
+    List<PUser> users;
 
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, include = "non-lazy")
-	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinTable(inverseJoinColumns = @JoinColumn(name = "permission"), // 被维护端外键
-			joinColumns = @JoinColumn(name = "role"))
-	// 维护端外键
-	List<PPermission> permissions;
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, include = "non-lazy")
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(inverseJoinColumns = @JoinColumn(name = "permission"), // 被维护端外键
+            joinColumns = @JoinColumn(name = "role"))
+    // 维护端外键
+            List<PPermission> permissions;
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public List<PUser> getUsers() {
-		return users;
-	}
+    public List<PUser> getUsers() {
+        return users;
+    }
 
-	public void setUsers(List<PUser> users) {
-		this.users = users;
-	}
+    public void setUsers(List<PUser> users) {
+        this.users = users;
+    }
 
-	public List<PPermission> getPermissions() {
-		return permissions;
-	}
+    public List<PPermission> getPermissions() {
+        return permissions;
+    }
 
-	public void setPermissions(List<PPermission> permissions) {
-		this.permissions = permissions;
-	}
+    public void setPermissions(List<PPermission> permissions) {
+        this.permissions = permissions;
+    }
 
 }

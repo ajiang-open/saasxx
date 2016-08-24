@@ -7,5 +7,5 @@ import com.saasxx.core.module.common.schema.PFile;
 /**
  * Created by lujijiang on 16/6/11.
  */
-public interface FileRepository extends JpaRepository<PFile,String>{
+public interface FileRepository extends JpaRepository<PFile, String> {
 }

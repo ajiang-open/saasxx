@@ -24,33 +24,33 @@ import com.saasxx.framework.dao.orm.schema.IdEntity;
 @DynamicUpdate
 @DynamicInsert
 public class PPreUser extends IdEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8630224832669631995L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8630224832669631995L;
 
-	@Comment("对应用户")
-	@ManyToOne(cascade = { CascadeType.REFRESH }, optional = false, fetch = FetchType.LAZY)
-	PUser user;
+    @Comment("对应用户")
+    @ManyToOne(cascade = {CascadeType.REFRESH}, optional = false, fetch = FetchType.LAZY)
+    PUser user;
 
-	@Comment("咨询建议")
-	@Column(length = 4096)
-	String advice;
+    @Comment("咨询建议")
+    @Column(length = 4096)
+    String advice;
 
-	public PUser getUser() {
-		return user;
-	}
+    public PUser getUser() {
+        return user;
+    }
 
-	public void setUser(PUser user) {
-		this.user = user;
-	}
+    public void setUser(PUser user) {
+        this.user = user;
+    }
 
-	public String getAdvice() {
-		return advice;
-	}
+    public String getAdvice() {
+        return advice;
+    }
 
-	public void setAdvice(String advice) {
-		this.advice = advice;
-	}
+    public void setAdvice(String advice) {
+        this.advice = advice;
+    }
 
 }

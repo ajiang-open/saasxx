@@ -8,7 +8,7 @@ import com.saasxx.core.module.account.schema.PUser;
  * Created by lujijiang on 16/6/11.
  */
 public interface UserRepository extends JpaRepository<PUser, String> {
-	PUser findByTel(String tel);
+    PUser findByTel(String tel);
 
-	PUser findByEmail(String value);
+    PUser findByEmail(String value);
 }

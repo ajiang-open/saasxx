@@ -17,26 +17,26 @@ import java.util.Random;
 @Component
 public class UserWebRpc {
 
-	static Log log = Logs.getLog();
-	@Autowired
-	UserService userService;
+    static Log log = Logs.getLog();
+    @Autowired
+    UserService userService;
 
-	@WebRpc
-	public Object sendSmsValidateCode(VUser vUser, ImageValidateVo imageValidateVo) {
-		if(!Lang.equals(imageValidateVo.getImageValidateCode(), UserController.CODE_MAP.get(imageValidateVo.getKey()))){
-			throw Lang.newException("图片验证码不正确");
-		}
-		vUser.setValidateCode(generateCode());
-		userService.saveUser(vUser);
-		return Lang.newMap();
-	}
+    @WebRpc
+    public Object sendSmsValidateCode(VUser vUser, ImageValidateVo imageValidateVo) {
+        if (!Lang.equals(imageValidateVo.getImageValidateCode(), UserController.CODE_MAP.get(imageValidateVo.getKey()))) {
+            throw Lang.newException("图片验证码不正确");
+        }
+        vUser.setValidateCode(generateCode());
+        userService.saveUser(vUser);
+        return Lang.newMap();
+    }
 
-	private String generateCode() {
-		StringBuilder codeBuilder = new StringBuilder();
-		for (int i =0;i<6;i++){
-			Random random = new Random();
-			codeBuilder.append(random.nextInt(10));
-		}
-		return codeBuilder.toString();
-	}
+    private String generateCode() {
+        StringBuilder codeBuilder = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            Random random = new Random();
+            codeBuilder.append(random.nextInt(10));
+        }
+        return codeBuilder.toString();
+    }
 }

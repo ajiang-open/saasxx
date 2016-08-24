@@ -28,57 +28,57 @@ import com.saasxx.framework.dao.orm.schema.IdEntity;
 @DynamicUpdate
 @DynamicInsert
 public class PArea extends IdEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6028694136360973285L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6028694136360973285L;
 
-	@Column(unique = true, length = 8)
-	@Comment("代码")
-	String code;
+    @Column(unique = true, length = 8)
+    @Comment("代码")
+    String code;
 
-	@Comment("名称")
-	String name;
+    @Comment("名称")
+    String name;
 
-	@Comment("父区域")
-	@ManyToOne(cascade = { CascadeType.REFRESH }, optional = false, fetch = FetchType.LAZY)
-	PArea parent;
+    @Comment("父区域")
+    @ManyToOne(cascade = {CascadeType.REFRESH}, optional = false, fetch = FetchType.LAZY)
+    PArea parent;
 
-	@Comment("区列表")
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "parent")
-	@JSONField(serialize = false)
-	List<PArea> children;
+    @Comment("区列表")
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "parent")
+    @JSONField(serialize = false)
+    List<PArea> children;
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public PArea getParent() {
-		return parent;
-	}
+    public PArea getParent() {
+        return parent;
+    }
 
-	public void setParent(PArea parent) {
-		this.parent = parent;
-	}
+    public void setParent(PArea parent) {
+        this.parent = parent;
+    }
 
-	public List<PArea> getChildren() {
-		return children;
-	}
+    public List<PArea> getChildren() {
+        return children;
+    }
 
-	public void setChildren(List<PArea> children) {
-		this.children = children;
-	}
+    public void setChildren(List<PArea> children) {
+        this.children = children;
+    }
 
 }

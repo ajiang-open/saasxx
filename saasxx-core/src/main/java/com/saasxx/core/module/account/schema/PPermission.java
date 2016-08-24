@@ -30,78 +30,78 @@ import com.saasxx.framework.dao.orm.schema.IdEntity;
 @DynamicUpdate
 @DynamicInsert
 public class PPermission extends IdEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8322991992189674593L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8322991992189674593L;
 
-	@NotNull
-	@Column(length = 128)
-	@Comment("标签，用于显示含义标题")
-	String label;
+    @NotNull
+    @Column(length = 128)
+    @Comment("标签，用于显示含义标题")
+    String label;
 
-	@NotNull
-	@Column(length = 128, unique = true)
-	@Comment("权限值")
-	String value;
+    @NotNull
+    @Column(length = 128, unique = true)
+    @Comment("权限值")
+    String value;
 
-	@Comment("权限类型")
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	@Column(length = 16)
-	PermissionType type;
+    @Comment("权限类型")
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(length = 16)
+    PermissionType type;
 
-	@NotNull
-	@Column(length = 1024)
-	@Comment("权限描述")
-	String description;
+    @NotNull
+    @Column(length = 1024)
+    @Comment("权限描述")
+    String description;
 
-	/**
-	 * 权限所属角色
-	 */
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, include = "non-lazy")
-	@ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "permissions", // 通过维护端的属性关联
-			fetch = FetchType.LAZY)
-	List<PRole> roles;
+    /**
+     * 权限所属角色
+     */
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, include = "non-lazy")
+    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "permissions", // 通过维护端的属性关联
+            fetch = FetchType.LAZY)
+    List<PRole> roles;
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	public PermissionType getType() {
-		return type;
-	}
+    public PermissionType getType() {
+        return type;
+    }
 
-	public void setType(PermissionType type) {
-		this.type = type;
-	}
+    public void setType(PermissionType type) {
+        this.type = type;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public List<PRole> getRoles() {
-		return roles;
-	}
+    public List<PRole> getRoles() {
+        return roles;
+    }
 
-	public void setRoles(List<PRole> roles) {
-		this.roles = roles;
-	}
+    public void setRoles(List<PRole> roles) {
+        this.roles = roles;
+    }
 
 }

@@ -21,21 +21,21 @@ import com.saasxx.framework.dao.orm.schema.IdEntity;
 @DynamicUpdate
 @DynamicInsert
 public class PFile extends IdEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6849233149940251401L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6849233149940251401L;
 
-	@Column(length = 1024)
-	@Comment("文件路径")
-	private String path;
+    @Column(length = 1024)
+    @Comment("文件路径")
+    private String path;
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
 }

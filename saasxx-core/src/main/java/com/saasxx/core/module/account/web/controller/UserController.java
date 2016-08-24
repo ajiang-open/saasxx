@@ -28,35 +28,35 @@ import com.saasxx.framework.web.springmvc.annotation.RequestForm;
 @RequestMapping("user")
 public class UserController {
 
-	private static Log log = Logs.getLog();
+    private static Log log = Logs.getLog();
 
-	public final static Map<String, String> CODE_MAP = Collections.synchronizedMap(Lang.newLRUMap(102400));
-	@Autowired
-	UserService userService;
+    public final static Map<String, String> CODE_MAP = Collections.synchronizedMap(Lang.newLRUMap(102400));
+    @Autowired
+    UserService userService;
 
-	@RequestMapping("imageValidateCode")
-	public void imageValidateCode(@RequestParam("key") String key, HttpServletResponse response) throws IOException {
-		response.setContentType("image/jpeg");
-		try (OutputStream os = response.getOutputStream()) {
-			String code = Captchas.create().setChars("1234567890").setWidth(90).setHeight(30).setSize(4)
-					.setInterferenceCount(32).generate(os);
-			CODE_MAP.put(key, code);
-		}
-	}
+    @RequestMapping("imageValidateCode")
+    public void imageValidateCode(@RequestParam("key") String key, HttpServletResponse response) throws IOException {
+        response.setContentType("image/jpeg");
+        try (OutputStream os = response.getOutputStream()) {
+            String code = Captchas.create().setChars("1234567890").setWidth(90).setHeight(30).setSize(4)
+                    .setInterferenceCount(32).generate(os);
+            CODE_MAP.put(key, code);
+        }
+    }
 
-	@RequestMapping("checkEmail.do")
-	@ResponseBody
-	public Object checkEmail(@RequestParam("value") String value) {
-		log.info("The sign up email is {}", value);
-		userService.checkSignUpEmail(value);
-		return Lang.newMap();
-	}
+    @RequestMapping("checkEmail.do")
+    @ResponseBody
+    public Object checkEmail(@RequestParam("value") String value) {
+        log.info("The sign up email is {}", value);
+        userService.checkSignUpEmail(value);
+        return Lang.newMap();
+    }
 
-	@RequestMapping("signup")
-	@ResponseBody
-	public Object signup(@RequestForm VPreUser preUser) {
-		log.info("preUser is {}", preUser);
-		userService.signupPreUser(preUser);
-		return Lang.newMap();
-	}
+    @RequestMapping("signup")
+    @ResponseBody
+    public Object signup(@RequestForm VPreUser preUser) {
+        log.info("preUser is {}", preUser);
+        userService.signupPreUser(preUser);
+        return Lang.newMap();
+    }
 }

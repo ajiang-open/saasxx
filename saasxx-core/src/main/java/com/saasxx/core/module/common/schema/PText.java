@@ -25,44 +25,44 @@ import com.saasxx.framework.dao.orm.schema.IdEntity;
 @DynamicUpdate
 @DynamicInsert
 public class PText extends IdEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8405027913083143517L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8405027913083143517L;
 
-	@Comment("文本内容")
-	@NotNull
-	@Column(length = 4096)
-	String text;
+    @Comment("文本内容")
+    @NotNull
+    @Column(length = 4096)
+    String text;
 
-	@Comment("后续文本")
-	@ManyToOne(cascade = { CascadeType.REFRESH }, optional = false, fetch = FetchType.LAZY)
-	PText next;
+    @Comment("后续文本")
+    @ManyToOne(cascade = {CascadeType.REFRESH}, optional = false, fetch = FetchType.LAZY)
+    PText next;
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public void setText(String text) {
+        this.text = text;
+    }
 
-	public PText getNext() {
-		return next;
-	}
+    public PText getNext() {
+        return next;
+    }
 
-	public void setNext(PText next) {
-		this.next = next;
-	}
+    public void setNext(PText next) {
+        this.next = next;
+    }
 
-	public String toFullString() {
-		if (getNext() == null) {
-			return text;
-		}
-		if (getNext().getId().equals(getId())) {
-			return text;
-		}
-		return text.concat(next.toFullString());
-	}
+    public String toFullString() {
+        if (getNext() == null) {
+            return text;
+        }
+        if (getNext().getId().equals(getId())) {
+            return text;
+        }
+        return text.concat(next.toFullString());
+    }
 
 }

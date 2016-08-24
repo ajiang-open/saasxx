@@ -6,6 +6,6 @@ import com.saasxx.core.module.common.schema.PArea;
 
 public interface AreaRepository extends JpaRepository<PArea, String> {
 
-	PArea findByCode(String regionCode);
+    PArea findByCode(String regionCode);
 
 }

@@ -20,32 +20,32 @@ import com.saasxx.framework.dao.finder.facade.Finder;
 @Transactional
 public class AddressService {
 
-	@PersistenceContext
-	EntityManager em;
+    @PersistenceContext
+    EntityManager em;
 
-	@Autowired
-	AreaRepository areaRepository;
+    @Autowired
+    AreaRepository areaRepository;
 
-	public List<VArea> findAreas(VArea vArea) {
-		Finder finder = Finders.newFinder();
-		PArea modelArea = finder.from(PArea.class);
-		if (vArea.getCode() == null) {
-			finder.where(modelArea.getParent()).equal(modelArea);
-		} else {
-			finder.where(modelArea.getParent().getCode()).equal(vArea.getCode());
-			finder.where(modelArea.getParent()).notEqual(modelArea);
-			finder.where(modelArea.getDisabled()).equal(false);
-		}
-		finder.order(modelArea.getCode()).asc();
-		List<PArea> pAreas = (List<PArea>) finder.list(em, true);
-		List<VArea> vAreas = Lang.newList();
-		for (PArea pArea : pAreas) {
-			VArea area = new VArea();
-			area.setCode(pArea.getCode());
-			area.setName(pArea.getName());
-			vAreas.add(area);
-		}
-		return vAreas;
-	}
+    public List<VArea> findAreas(VArea vArea) {
+        Finder finder = Finders.newFinder();
+        PArea modelArea = finder.from(PArea.class);
+        if (vArea.getCode() == null) {
+            finder.where(modelArea.getParent()).equal(modelArea);
+        } else {
+            finder.where(modelArea.getParent().getCode()).equal(vArea.getCode());
+            finder.where(modelArea.getParent()).notEqual(modelArea);
+            finder.where(modelArea.getDisabled()).equal(false);
+        }
+        finder.order(modelArea.getCode()).asc();
+        List<PArea> pAreas = (List<PArea>) finder.list(em, true);
+        List<VArea> vAreas = Lang.newList();
+        for (PArea pArea : pAreas) {
+            VArea area = new VArea();
+            area.setCode(pArea.getCode());
+            area.setName(pArea.getName());
+            vAreas.add(area);
+        }
+        return vAreas;
+    }
 
 }

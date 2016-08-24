@@ -10,22 +10,21 @@ import com.saasxx.framework.security.shiro.Shiros;
 
 /**
  * 安全控制器
- * 
- * @author lujijiang
  *
+ * @author lujijiang
  */
 @RestController
 @RequestMapping("/security")
 public class SecurityController {
-	/**
-	 * 安全检查
-	 * 
-	 * @return
-	 */
-	@RequestMapping("/check")
-	public Object check() {
-		Map<String, Boolean> map = Lang.newMap();
-		map.put("/account/index", Shiros.currentUser() == null);
-		return map;
-	}
+    /**
+     * 安全检查
+     *
+     * @return
+     */
+    @RequestMapping("/check")
+    public Object check() {
+        Map<String, Boolean> map = Lang.newMap();
+        map.put("/account/index", Shiros.currentUser() == null);
+        return map;
+    }
 }

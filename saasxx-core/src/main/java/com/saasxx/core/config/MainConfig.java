@@ -45,140 +45,137 @@ import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
 @MapperScan(Constants.BACKAGE_DAO)
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan({ Constants.BACKAGE_DAO, Constants.BACKAGE_SERVICE, Constants.BACKAGE_STARTUP })
+@ComponentScan({Constants.BACKAGE_DAO, Constants.BACKAGE_SERVICE, Constants.BACKAGE_STARTUP})
 public class MainConfig {
 
-	private Environment env = Springs.getEnvironment("classpath:${spring.profiles.active}/config.properties");
+    private Environment env = Springs.getEnvironment("classpath:${spring.profiles.active}/config.properties");
 
-	@Autowired
-	ApplicationContext ac;
+    @Autowired
+    ApplicationContext ac;
 
-	@Bean
-	public DataSource dataSource() {
+    @Bean
+    public DataSource dataSource() {
 
-		String jndiName = env.getProperty("db.jndi_name");
-		if (!Lang.isEmpty(jndiName)) {
+        String jndiName = env.getProperty("db.jndi_name");
+        if (!Lang.isEmpty(jndiName)) {
 
-			JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
-			try {
-				dsLookup.setResourceRef(false);
-				return dsLookup.getDataSource(jndiName);
-			} catch (Exception e) {
-				dsLookup.setResourceRef(true);
-				return dsLookup.getDataSource(jndiName);
-			}
-		}
-		DruidDataSource dataSource = new DruidDataSource();
-		dataSource.setUrl(env.getProperty("db.url"));
-		dataSource.setUsername(env.getProperty("db.username"));
-		dataSource.setPassword(env.getProperty("db.password"));
-		dataSource.setTestWhileIdle(false);
-		return new DataSourceSpy(dataSource);
-	}
+            JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
+            try {
+                dsLookup.setResourceRef(false);
+                return dsLookup.getDataSource(jndiName);
+            } catch (Exception e) {
+                dsLookup.setResourceRef(true);
+                return dsLookup.getDataSource(jndiName);
+            }
+        }
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(env.getProperty("db.url"));
+        dataSource.setUsername(env.getProperty("db.username"));
+        dataSource.setPassword(env.getProperty("db.password"));
+        dataSource.setTestWhileIdle(false);
+        return new DataSourceSpy(dataSource);
+    }
 
-	@Bean
-	public DataSource jpaProxyDataSource() {
-		return new JpaProxyDataSource();
-	}
+    @Bean
+    public DataSource jpaProxyDataSource() {
+        return new JpaProxyDataSource();
+    }
 
-	@Bean
-	@Autowired
-	public StartupListener startupListenerDev() {
-		StartupListener startupListener = new StartupListener();
-		startupListener.setBasePackages(Constants.BACKAGE_STARTUP);
-		return startupListener;
-	}
+    @Bean
+    public StartupListener startupListenerDev() {
+        StartupListener startupListener = new StartupListener();
+        startupListener.setBasePackages(Constants.BACKAGE_STARTUP);
+        return startupListener;
+    }
 
-	@Bean
-	@Autowired
-	public JpaCommentListener jpaCommentListener() {
-		JpaCommentListener jpaCommentListener = new JpaCommentListener();
-		jpaCommentListener.setEntityManagerFactory(ac.getBean(EntityManagerFactory.class));
-		jpaCommentListener.setActiveProfiles("dev");
-		return jpaCommentListener;
-	}
+    @Bean
+    public JpaCommentListener jpaCommentListener() {
+        JpaCommentListener jpaCommentListener = new JpaCommentListener();
+        jpaCommentListener.setEntityManagerFactory(ac.getBean(EntityManagerFactory.class));
+        jpaCommentListener.setActiveProfiles("dev");
+        return jpaCommentListener;
+    }
 
-	@Bean
-	@Autowired
-	public PlatformTransactionManager transactionManager() throws ClassNotFoundException {
-		return new JpaTransactionManager(entityManagerFactory().getObject());
-	}
+    @Bean
+    public PlatformTransactionManager transactionManager() throws ClassNotFoundException {
+        return new JpaTransactionManager(entityManagerFactory().getObject());
+    }
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
-		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException {
+        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
-		entityManagerFactoryBean.setDataSource(dataSource());
-		entityManagerFactoryBean.setPackagesToScan(Constants.BACKAGE_SCHEMA);
-		entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+        entityManagerFactoryBean.setDataSource(dataSource());
+        entityManagerFactoryBean.setPackagesToScan(Constants.BACKAGE_SCHEMA);
+        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 
-		Properties jpaProperties = new Properties();
+        Properties jpaProperties = new Properties();
 
-		// SQL generation / debugging
+        // SQL generation / debugging
 
-		jpaProperties.put(AvailableSettings.FORMAT_SQL, false);
-		jpaProperties.put(AvailableSettings.SHOW_SQL, false);
-		jpaProperties.put(AvailableSettings.HBM2DDL_AUTO, env.getProperty(AvailableSettings.HBM2DDL_AUTO));
-		jpaProperties.put(AvailableSettings.GENERATE_STATISTICS, true);
+        jpaProperties.put(AvailableSettings.FORMAT_SQL, false);
+        jpaProperties.put(AvailableSettings.SHOW_SQL, false);
+        jpaProperties.put(AvailableSettings.HBM2DDL_AUTO, env.getProperty(AvailableSettings.HBM2DDL_AUTO));
+        jpaProperties.put(AvailableSettings.GENERATE_STATISTICS, true);
 
-		// Second level caching
-		jpaProperties.put(AvailableSettings.USE_SECOND_LEVEL_CACHE, true);
-		jpaProperties.put(AvailableSettings.USE_QUERY_CACHE, env.getProperty(AvailableSettings.USE_QUERY_CACHE));
-		jpaProperties.put(AvailableSettings.USE_STRUCTURED_CACHE, true);
+        // Second level caching
+        jpaProperties.put(AvailableSettings.USE_SECOND_LEVEL_CACHE, true);
+        jpaProperties.put(AvailableSettings.USE_QUERY_CACHE, env.getProperty(AvailableSettings.USE_QUERY_CACHE));
+        jpaProperties.put(AvailableSettings.USE_STRUCTURED_CACHE, true);
 
-		// for redis cache implement
-		// jpaProperties.put(AvailableSettings.CACHE_REGION_FACTORY,
-		// SingletonRedisRegionFactory.class.getName());
-		// jpaProperties.put(AvailableSettings.CACHE_REGION_PREFIX,
-		// "hibernate-redis");
-		// jpaProperties.put(AvailableSettings.USE_STRUCTURED_CACHE, true);
-		// jpaProperties.put(AvailableSettings.CACHE_PROVIDER_CONFIG,
-		// env.getActiveProfiles()[0] + "/cache/hibernate-redis.properties");
+        // for redis cache implement
+        // jpaProperties.put(AvailableSettings.CACHE_REGION_FACTORY,
+        // SingletonRedisRegionFactory.class.getName());
+        // jpaProperties.put(AvailableSettings.CACHE_REGION_PREFIX,
+        // "hibernate-redis");
+        // jpaProperties.put(AvailableSettings.USE_STRUCTURED_CACHE, true);
+        // jpaProperties.put(AvailableSettings.CACHE_PROVIDER_CONFIG,
+        // env.getActiveProfiles()[0] + "/cache/hibernate-redis.properties");
 
-		// for ehcache implement
-		jpaProperties.put(AvailableSettings.CACHE_REGION_FACTORY, EhCacheRegionFactory.class.getName());
-		jpaProperties.put(AvailableSettings.CACHE_REGION_PREFIX, "hibernate-ehcache");
+        // for ehcache implement
+        jpaProperties.put(AvailableSettings.CACHE_REGION_FACTORY, EhCacheRegionFactory.class.getName());
+        jpaProperties.put(AvailableSettings.CACHE_REGION_PREFIX, "hibernate-ehcache");
 
-		jpaProperties.put("net.sf.ehcache.configurationResourceName",
-				env.getActiveProfiles()[0] + "/cache/hibernate-ehcache.xml");
-		//
-		// We
-		// only
-		// have
-		// one
-		// active
-		// profile
-		jpaProperties.put(AvailableSettings.DIALECT, env.getProperty(AvailableSettings.DIALECT));
-		jpaProperties.put(AvailableSettings.IMPLICIT_NAMING_STRATEGY,
-				ImplicitNamingStrategyCompliantImpl.class.getCanonicalName());
-		entityManagerFactoryBean.setJpaProperties(jpaProperties);
-		return entityManagerFactoryBean;
-	}
+        jpaProperties.put("net.sf.ehcache.configurationResourceName",
+                env.getActiveProfiles()[0] + "/cache/hibernate-ehcache.xml");
+        //
+        // We
+        // only
+        // have
+        // one
+        // active
+        // profile
+        jpaProperties.put(AvailableSettings.DIALECT, env.getProperty(AvailableSettings.DIALECT));
+        jpaProperties.put(AvailableSettings.IMPLICIT_NAMING_STRATEGY,
+                ImplicitNamingStrategyCompliantImpl.class.getCanonicalName());
+        entityManagerFactoryBean.setJpaProperties(jpaProperties);
+        return entityManagerFactoryBean;
+    }
 
-	@Bean
-	public SqlSessionFactory sqlSessionFactory() throws Exception {
-		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-		String basePackage = Constants.BACKAGE_DAO;
-		PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();
-		String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + basePackage.replace('.', '/')
-				+ "/" + "**/*.xml";
-		sessionFactory.setMapperLocations(pathMatchingResourcePatternResolver.getResources(packageSearchPath));
-		// 配置分页信息
-		PageHelper pageHelper = new PageHelper();
-		Properties pageHelperProperties = new Properties();
-		pageHelperProperties.put("dialect", "mysql");
-		pageHelperProperties.put("offsetAsPageNum", true);
-		pageHelperProperties.put("rowBoundsWithCount", true);
-		pageHelperProperties.put("pageSizeZero", true);
-		pageHelperProperties.put("reasonable", true);
-		pageHelper.setProperties(pageHelperProperties);
-		sessionFactory.setPlugins(new Interceptor[] { pageHelper });
-		sessionFactory.setDataSource(jpaProxyDataSource());
-		return sessionFactory.getObject();
-	}
+    @Bean
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        String basePackage = Constants.BACKAGE_DAO;
+        PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();
+        String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + basePackage.replace('.', '/')
+                + "/" + "**/*.xml";
+        sessionFactory.setMapperLocations(pathMatchingResourcePatternResolver.getResources(packageSearchPath));
+        // 配置分页信息
+        PageHelper pageHelper = new PageHelper();
+        Properties pageHelperProperties = new Properties();
+        pageHelperProperties.put("dialect", "mysql");
+        pageHelperProperties.put("offsetAsPageNum", true);
+        pageHelperProperties.put("rowBoundsWithCount", true);
+        pageHelperProperties.put("pageSizeZero", true);
+        pageHelperProperties.put("reasonable", true);
+        pageHelper.setProperties(pageHelperProperties);
+        sessionFactory.setPlugins(new Interceptor[]{pageHelper});
+        sessionFactory.setDataSource(jpaProxyDataSource());
+        return sessionFactory.getObject();
+    }
 
-	@Bean
-	public FilePool filePool() {
-		return new FilePool(env.getProperty("filepool.path"));
-	}
+    @Bean
+    public FilePool filePool() {
+        return new FilePool(env.getProperty("filepool.path"));
+    }
 }

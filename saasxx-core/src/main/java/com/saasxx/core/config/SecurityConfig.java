@@ -19,50 +19,50 @@ import com.saasxx.framework.security.shiro.jwt.JWTShiroRealm;
 @Configuration
 public class SecurityConfig {
 
-	@Autowired
-	ApplicationContext ac;
+    @Autowired
+    ApplicationContext ac;
 
-	@Bean
-	public JWTAuthenticationFilter jwtAuthenticationFilter() {
-		JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
-		return jwtAuthenticationFilter;
-	}
+    @Bean
+    public JWTAuthenticationFilter jwtAuthenticationFilter() {
+        JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
+        return jwtAuthenticationFilter;
+    }
 
-	@Bean(name = { "shiroFilter" })
-	public ShiroFilterFactoryBean shiroFilterFactoryBean() {
-		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-		shiroFilterFactoryBean.setSecurityManager(securityManager());
-		shiroFilterFactoryBean.getFilters().put("jwt", jwtAuthenticationFilter());
-		shiroFilterFactoryBean.setFilterChainDefinitionMap(Lang.newMap("/web-rpc", "noSessionCreation,jwt",
-				"/security/**", "noSessionCreation,jwt", "*.validate", "noSessionCreation,jwt"));
-		return shiroFilterFactoryBean;
-	}
+    @Bean(name = {"shiroFilter"})
+    public ShiroFilterFactoryBean shiroFilterFactoryBean() {
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager());
+        shiroFilterFactoryBean.getFilters().put("jwt", jwtAuthenticationFilter());
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(Lang.newMap("/web-rpc", "noSessionCreation,jwt",
+                "/security/**", "noSessionCreation,jwt", "*.validate", "noSessionCreation,jwt"));
+        return shiroFilterFactoryBean;
+    }
 
-	@Bean
-	public DefaultWebSecurityManager securityManager() {
-		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-		securityManager.setRealms(Lang.newList(realm(), jwtRealm()));
-		if (securityManager.getAuthenticator() instanceof ModularRealmAuthenticator) {
-			ModularRealmAuthenticator modularRealmAuthenticator = (ModularRealmAuthenticator) securityManager
-					.getAuthenticator();
-			modularRealmAuthenticator.setAuthenticationStrategy(new SupportedSuccessfulStrategy());
-		}
-		return securityManager;
-	}
+    @Bean
+    public DefaultWebSecurityManager securityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealms(Lang.newList(realm(), jwtRealm()));
+        if (securityManager.getAuthenticator() instanceof ModularRealmAuthenticator) {
+            ModularRealmAuthenticator modularRealmAuthenticator = (ModularRealmAuthenticator) securityManager
+                    .getAuthenticator();
+            modularRealmAuthenticator.setAuthenticationStrategy(new SupportedSuccessfulStrategy());
+        }
+        return securityManager;
+    }
 
-	@Bean
-	public Realm realm() {
-		ShiroRealm shiroRealm = new ShiroRealm();
-		shiroRealm.setShiroService(ac.getBean(ShiroService.class));
-		return shiroRealm;
-	}
+    @Bean
+    public Realm realm() {
+        ShiroRealm shiroRealm = new ShiroRealm();
+        shiroRealm.setShiroService(ac.getBean(ShiroService.class));
+        return shiroRealm;
+    }
 
-	@Bean
-	public Realm jwtRealm() {
-		JWTShiroRealm shiroRealm = new JWTShiroRealm();
-		shiroRealm.setAppName("saasxx");
-		shiroRealm.setShiroService(ac.getBean(ShiroService.class));
-		return shiroRealm;
-	}
+    @Bean
+    public Realm jwtRealm() {
+        JWTShiroRealm shiroRealm = new JWTShiroRealm();
+        shiroRealm.setAppName("saasxx");
+        shiroRealm.setShiroService(ac.getBean(ShiroService.class));
+        return shiroRealm;
+    }
 
 }
